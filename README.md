@@ -20,7 +20,7 @@ Make sure you have Node.js and npm install.
       $ cd backend</pre>
       <pre>npm install</pre>
   3. Connect to MongoDb.
-      Create .env file in backend folder and specify MONGO_URL.
+      Create .env file in backend folder and specify MONGO_URL and PORT for 5000.
   4. Start the Application
       <pre>node server.mjs</pre>
   5. Install frontend Dependencies
@@ -28,6 +28,6 @@ Make sure you have Node.js and npm install.
       <pre>npm install</pre>
   6. Start the Application
       <pre>npm start</pre>
-  Front application runs from localhost:3000 and Api runs from localhost:8000
+  Front application runs from localhost:3000 and Api runs from localhost:5000
   
 
