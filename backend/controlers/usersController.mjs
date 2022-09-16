@@ -63,7 +63,6 @@ const setavatar = async (request, response, next) => {
 const allusers = async (request, response, next) => {
 	try {
 		const users = await UserModel.find({_id:{$ne:request.params.id}}).select([
-			"email",
 			"username",
 			"avatarColor",
 			"_id",
@@ -74,9 +73,23 @@ const allusers = async (request, response, next) => {
 	}
 }
 
+const user = async (request, response, next) => {
+	try {
+		const user = await UserModel.findOne({_id:request.params.id}).select([
+			"username",
+			"avatarColor",
+			"_id",
+		]);
+		return response.json({user})
+	} catch (error) {
+		next(error);
+	}
+}
+
 export {
 	register,
 	login,
 	setavatar,
 	allusers,
+	user,
 };
