@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {Link, useNavigate} from 'react-router-dom';
 import Logo from '../assets/logo.png'
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -107,7 +107,6 @@ export function Register() {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		if(handleValidation()){
-			console.log('Validation', registerRoute);
 			const {password, username, email} = values;
 			const {data} = await axios.post(registerRoute, JSON.stringify({
 				username,

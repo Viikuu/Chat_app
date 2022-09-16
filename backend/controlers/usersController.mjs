@@ -46,14 +46,14 @@ const login = async (request, response, next) => {
 const setavatar = async (request, response, next) => {
 	try {
 		const userId = request.params.id;
-		const avatarImage = request.body.image;
+		const avatarColor = request.body.avatarColor;
 		const userData = await UserModel.findByIdAndUpdate(userId, {
-			isAvatarImageSet:true,
-			avatarImage,
+			isAvatarColorSet:true,
+			avatarColor,
 		});
 		return response.json({
-			isSet: userData.isAvatarImageSet,
-			image: userData.avatarImage,
+			isSet: userData.isAvatarColorSet,
+			avatarColor: userData.avatarColor,
 		});
 	} catch (error) {
 		next(error);
@@ -65,7 +65,7 @@ const allusers = async (request, response, next) => {
 		const users = await UserModel.find({_id:{$ne:request.params.id}}).select([
 			"email",
 			"username",
-			"avatarImage",
+			"avatarColor",
 			"_id",
 		]);
 		return response.json({users})

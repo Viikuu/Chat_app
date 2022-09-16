@@ -110,7 +110,7 @@ const Container = styled.div`
 export function Contacts({contacts, changeChat, currentUser}) {
 	const navigate = useNavigate();
 	const [currentUserName, setCurrentUserName] = useState(undefined);
-	const [currentUserImage, setCurrentUserImage] = useState(undefined);
+	const [currentUserAvatarColor, setCurrentUserAvatarColor] = useState(undefined);
 	const [currentSelected, setCurrentSelected] = useState(undefined);
 
 	useEffect(() => {
@@ -121,7 +121,7 @@ export function Contacts({contacts, changeChat, currentUser}) {
 
 	useEffect(() => {
 		setCurrentUserName(currentUser.username);
-		setCurrentUserImage(JSON.parse(currentUser.avatarImage));
+		setCurrentUserAvatarColor(JSON.parse(currentUser.avatarColor));
 	}, []);
 
 	const changeCurrentChat = (index, contact) => {
@@ -146,7 +146,7 @@ export function Contacts({contacts, changeChat, currentUser}) {
 								}`}
 								onClick={() => changeCurrentChat(index, contact)}
 							>
-								<div className="avatar" style={JSON.parse(contact.avatarImage)}>
+								<div className="avatar" style={contact.avatarColor === "" ? {} : JSON.parse(contact.avatarColor)}>
 								</div>
 								<div className="username">
 									<h3>{contact.username}</h3>
@@ -156,7 +156,7 @@ export function Contacts({contacts, changeChat, currentUser}) {
 					})}
 				</div>
 				<div className="current-user">
-					<div className="avatar" style={currentUserImage}>
+					<div className="avatar" style={currentUserAvatarColor}>
 					</div>
 					<div className="username">
 						<h2>{currentUserName}</h2>
@@ -166,4 +166,4 @@ export function Contacts({contacts, changeChat, currentUser}) {
 			</Container>
 		</>
 	);
-};
+}

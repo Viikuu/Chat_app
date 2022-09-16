@@ -62,7 +62,7 @@ export default function Chat() {
 		}
 
 		if (currentUser) {
-			if (currentUser.isAvatarImageSet) {
+			if (currentUser.isAvatarColorSet) {
 				getUsers();
 			} else {
 				navigate('/setAvatar');
@@ -77,7 +77,7 @@ export default function Chat() {
 	return (
 		<>
 			<Container>
-				{currentUser === undefined ?
+				{currentUser === undefined || !currentUser.isAvatarColorSet ?
 					(<></>) : (
 						<div className={'container'}>
 							<Contacts
@@ -90,7 +90,7 @@ export default function Chat() {
 									currentUser={currentUser}
 								/>
 							) : (
-								currentChat === undefined ? (
+								currentChat ? (
 									<div></div>
 								):
 									(

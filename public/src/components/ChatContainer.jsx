@@ -155,7 +155,7 @@ export function ChatContainer({currentChat, socket, currentUser}) {
 		<Container>
 			<div className="chat-header">
 				<div className="user-details">
-					<div className="avatar" style={JSON.parse(currentChat.avatarImage)}>
+					<div className="avatar" style={currentChat.avatarColor === "" ? {} : JSON.parse(currentChat.avatarColor)}>
 					</div>
 					<div className="username">
 						<h3>{currentChat.username}</h3>
