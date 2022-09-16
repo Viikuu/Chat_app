@@ -6,7 +6,6 @@ import {useNavigate} from 'react-router-dom';
 import loader from '../assets/loader.gif';
 import axios from 'axios';
 import {setAvatarRoute} from '../utils/APIRoutes';
-import Avatar from 'react-avatar';
 
 const Container = styled.div`
   display: flex;
@@ -114,7 +113,6 @@ const Container = styled.div`
 `;
 
 export default function SetAvatar() {
-	const api = `https://api.multiavatar.com/4645646`;
 	const navigate = useNavigate();
 	const [avatars, setAvatars] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -142,12 +140,12 @@ export default function SetAvatar() {
 			);
 
 			const {data} = await axios.post(`${setAvatarRoute}/${user._id}`, {
-				image: JSON.stringify(avatars[selectedAvatar]),
+				avatarColor: JSON.stringify(avatars[selectedAvatar]),
 			});
 
 			if (data.isSet) {
-				user.isAvatarImageSet = true;
-				user.avatarImage = data.image;
+				user.isAvatarColorSet = true;
+				user.avatarColor = data.avatarColor;
 				localStorage.setItem(
 					'chat-app-user',
 					JSON.stringify(user)
