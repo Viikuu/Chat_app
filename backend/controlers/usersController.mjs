@@ -1,5 +1,11 @@
 import {UserModel} from '../models/userModel.mjs';
 import bcrypt from 'bcrypt';
+import process from 'node:process';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import {BlackList} from '../models/tokenblacklist.mjs';
+
+dotenv.config();
 
 const register = async (request, response, next) => {
 	try {
@@ -19,7 +25,12 @@ const register = async (request, response, next) => {
 			password: hashedPassword,
 		})
 		delete user.password;
-		return response.json({status: true, user});
+
+		response.cookie('refreshToken', await user.generateAuthToken(), {
+			httpOnly: true,
+		});
+
+		return response.json({status: true});
 	} catch (error) {
 		next(error);
 	}
@@ -37,7 +48,11 @@ const login = async (request, response, next) => {
 			return response.json({message: "Incorrect username or password", status: false});
 		}
 		delete user.password;
-		return response.json({status: true, user});
+
+		response.cookie('refreshToken', await user.generateAuthToken(), {
+			httpOnly: true,
+		});
+		return response.json({status: true});
 	} catch (error) {
 		next(error);
 	}
@@ -73,6 +88,27 @@ const allusers = async (request, response, next) => {
 	}
 }
 
+const logout = async (request, response, next) => {
+	try {
+		const token = request.cookie("token");
+		response.clearCookie('token');
+		let id;
+		try{
+			id = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+		} catch (error) {
+			return response.json({status:true, message:'Logged out successfully'});
+		}
+		if(id !== undefined) {
+			await BlackList.create({
+				token,
+			});
+			return response.json({status:true, message:'Logged out successfully'});
+		}
+	} catch (error) {
+		next(error);
+	}
+}
+
 const user = async (request, response, next) => {
 	try {
 		const user = await UserModel.findOne({_id:request.params.id}).select([
@@ -92,4 +128,5 @@ export {
 	setavatar,
 	allusers,
 	user,
+	logout,
 };
