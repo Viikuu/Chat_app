@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import {Server} from 'socket.io';
+import cookieParser from 'cookie-parser';
 import {connection} from './utils/db.mjs';
 import {userRoutes} from './routers/userRoutes.mjs';
 import {messagesRoutes} from './routers/messagesRoute.mjs';
@@ -12,6 +13,7 @@ dotenv.config();
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/auth", userRoutes);
 app.use("/api/messages", messagesRoutes);
