@@ -1,4 +1,9 @@
 import mongoose from 'mongoose';
+import process from 'node:process';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const userSchema = new mongoose.Schema(
 	{
@@ -30,7 +35,18 @@ const userSchema = new mongoose.Schema(
 		},
 	},
 	{timestamps: true}
+
 );
+
+userSchema.methods.generateAuthToken = function () {
+	return jwt.sign({
+		_id: this._id,
+		username: this.username,
+	}, process.env.ACCESS_TOKEN_SECRET, {
+		expiresIn: '15m',
+	});
+};
+
 
 const UserModel = mongoose.model('User', userSchema);
 
