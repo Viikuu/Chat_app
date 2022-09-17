@@ -161,7 +161,7 @@ export function Contacts({contacts, changeChat, currentUser}) {
 					<div className="username">
 						<h2>{currentUserName}</h2>
 					</div>
-					<Logout currentUser={currentUser}/>
+					<Logout/>
 				</div>
 			</Container>
 		</>

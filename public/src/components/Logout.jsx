@@ -20,14 +20,14 @@ const Button = styled.button`
   }
 `;
 
-export function Logout({currentUser}) {
+export function Logout() {
 	const navigate = useNavigate();
-	const handleClick = () => {
-		localStorage.clear();
+	const handleClick = async () => {
+		await axios.post(logoutRoute);
 		navigate("/login");
 	};
 	return (
-		<Button onClick={handleClick}>
+		<Button onClick={ handleClick}>
 			<BiPowerOff />
 		</Button>
 	);
